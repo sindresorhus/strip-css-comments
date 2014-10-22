@@ -1,6 +1,6 @@
 {
   "name": "strip-css-comments",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Strip comments from CSS",
   "license": "MIT",
   "repository": "sindresorhus/strip-css-comments",
