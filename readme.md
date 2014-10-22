@@ -37,6 +37,11 @@ $ strip-css-comments --help
 ```
 
 
+## Related
+
+- [`strip-json-comments`](https://github.com/sindresorhus/strip-json-comments)
+
+
 ## License
 
 MIT © [Sindre Sorhus](http://sindresorhus.com)
