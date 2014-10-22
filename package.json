@@ -1,0 +1,48 @@
+{
+  "name": "strip-css-comments",
+  "version": "0.0.0",
+  "description": "Strip comments from CSS",
+  "license": "MIT",
+  "repository": "sindresorhus/strip-css-comments",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "bin": {
+    "strip-css-comments": "cli.js"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    "bin",
+    "css",
+    "style",
+    "stylesheet",
+    "strip",
+    "remove",
+    "delete",
+    "trim",
+    "comments",
+    "preprocess",
+    "transform",
+    "string"
+  ],
+  "dependencies": {
+    "get-stdin": "^3.0.0",
+    "meow": "^2.0.0"
+  },
+  "devDependencies": {
+    "ava": "0.0.4"
+  }
+}
