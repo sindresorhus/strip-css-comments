@@ -7,14 +7,12 @@ module.exports = function (str) {
 	var currentChar = '';
 	var nextChar = '';
 	var insideString = false;
-	var insideComment = false;
 	var ret = '';
 
-	for (var i = 0; i < str.length; i++) {
+	for (var i = 0, strLength = str.length; i < strLength; i++) {
 		currentChar = str[i];
-		nextChar = str[i + 1];
 
-		if (!insideComment && str[i - 1] !== '\\') {
+		if (str[i - 1] !== '\\') {
 			if (currentChar === '"' || currentChar === '\'') {
 				if (insideString === currentChar) {
 					insideString = false;
@@ -29,19 +27,17 @@ module.exports = function (str) {
 			continue;
 		}
 
-		if (!insideComment && currentChar + nextChar === '/*') {
-			insideComment = true;
-			i++;
-			continue;
-		}
-
-		if (insideComment && currentChar + nextChar === '*/') {
-			insideComment = false;
-			i++;
-			continue;
-		}
-
-		if (insideComment) {
+		nextChar = str[i + 1];
+		//start /* type comment
+		if (currentChar + nextChar === '/*') {
+			//start skipping until we reach end of comment
+			for (var j = i + 2; j < strLength; j++) {
+				if (str[j] + str[j + 1] === '*/') {
+					break;
+				}
+			}
+			//skip i to the end of the comment
+			i = j + 1;
 			continue;
 		}
 
@@ -49,4 +45,4 @@ module.exports = function (str) {
 	}
 
 	return ret;
-}
+};
