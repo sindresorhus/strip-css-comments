@@ -37,6 +37,13 @@ $ strip-css-comments --help
 ```
 
 
+## Benchmark
+
+```sh
+$ npm run bench
+```
+
+
 ## Related
 
 - [`strip-json-comments`](https://github.com/sindresorhus/strip-json-comments)
