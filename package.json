@@ -16,7 +16,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "bench": "matcha bench.js"
   },
   "files": [
     "index.js",
@@ -43,6 +44,7 @@
     "meow": "^2.0.0"
   },
   "devDependencies": {
-    "ava": "0.0.4"
+    "ava": "0.0.4",
+    "matcha": "^0.5.0"
   }
 }
