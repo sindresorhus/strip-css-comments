@@ -41,7 +41,8 @@
   ],
   "dependencies": {
     "get-stdin": "^3.0.0",
-    "meow": "^2.0.0"
+    "meow": "^2.0.0",
+    "through2": "^0.6.3"
   },
   "devDependencies": {
     "ava": "0.0.4",

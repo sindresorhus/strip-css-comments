@@ -1,9 +1,7 @@
 'use strict';
-module.exports = function (str) {
-	if (typeof str !== 'string') {
-		throw new TypeError('Expected a string');
-	}
+var through = require('through2');
 
+function stripCssComments(str) {
 	var currentChar = '';
 	var insideString = false;
 	var ret = '';
@@ -38,4 +36,19 @@ module.exports = function (str) {
 	}
 
 	return ret;
+}
+
+module.exports = function (str) {
+	if (str && typeof str !== 'string') {
+		throw new TypeError('Expected a string');
+	}
+
+	if (str) {
+		return stripCssComments(str);
+	}
+
+	return through(function (data, enc, cb) {
+		var ret = stripCssComments(data.toString());
+		cb(null, new Buffer(ret));
+	});
 };
