@@ -35,17 +35,17 @@ stripCssComments('body { /* unicorns */color: hotpink; }');
 
 All options are optionals and set up with usable defaults. Change them according to your needs.
 
-### `preserve`
+### `all`
 
-`Boolean` indicates if "important" CSS comments (beginning with the characters `/*!`) should be preserved in the output.
+`Boolean` indicates if "important" CSS comments (beginning with the characters `/*!`) should be also striped in the output.
 
-Default value is `true`.
+Default value is `false`.
 
 ```js
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
 //=> /*! <copyright> */ body { color: hotpink; }
 
-stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {preserve: false});
+stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true});
 //=> body { color: hotpink; }
 ``` 
 

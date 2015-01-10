@@ -6,7 +6,7 @@ module.exports = function (str, options) {
 
 	options = options || {};
 
-	var preserve = options.hasOwnProperty('preserve') ? !!options.preserve : true;
+	var preserve = !options.all;
 	var currentChar = '';
 	var insideString = false;
 	var ret = '';

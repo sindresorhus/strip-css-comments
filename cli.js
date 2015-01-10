@@ -25,13 +25,7 @@ var cli = meow({
 });
 
 function init(data) {
-	var options = {};
-
-	if (cli.flags.hasOwnProperty('all')) {
-		options.preserve = !cli.flags.all;
-	}
-
-	console.log(stripCssComments(data, options));
+	console.log(stripCssComments(data, cli.flags));
 }
 
 if (process.stdin.isTTY) {
