@@ -12,7 +12,7 @@ var cli = meow({
 		'  strip-css-comments < <input-string>',
 		'',
 		'Option',
-		'  -a, --all strip all comments without any exceptions',
+		'  -a, --all  Strip all comments including `/*!`',
 		'',
 		'Example',
 		'  strip-css-comments src/app.css > dist/app.css',

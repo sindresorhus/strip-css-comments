@@ -45,6 +45,6 @@
   },
   "devDependencies": {
     "ava": "0.0.4",
-    "matcha": "^0.5.0"
+    "matcha": "^0.6.0"
   }
 }

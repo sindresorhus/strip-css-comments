@@ -1,12 +1,12 @@
 'use strict';
-module.exports = function (str, options) {
+module.exports = function (str, opts) {
 	if (typeof str !== 'string') {
 		throw new TypeError('Expected a string');
 	}
 
-	options = options || {};
+	opts = opts || {};
 
-	var preserve = !options.all;
+	var preserve = !opts.all;
 	var currentChar = '';
 	var insideString = false;
 	var ret = '';
