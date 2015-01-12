@@ -11,15 +11,21 @@ var cli = meow({
 		'  strip-css-comments <input-file> > <output-file>',
 		'  strip-css-comments < <input-string>',
 		'',
+		'Option',
+		'  -a, --all strip all comments without any exceptions',
+		'',
 		'Example',
-		'  strip-css-comments src/app.css > dist/app.css'
+		'  strip-css-comments src/app.css > dist/app.css',
+		'  strip-css-comments < src/app.css --all'
 	].join('\n')
 }, {
-	string: ['_']
+	string: ['_'],
+	boolean: ['all'],
+	alias: {'all': 'a'}
 });
 
 function init(data) {
-	console.log(stripCssComments(data));
+	console.log(stripCssComments(data, cli.flags));
 }
 
 if (process.stdin.isTTY) {

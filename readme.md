@@ -14,9 +14,40 @@ $ npm install --save strip-css-comments
 ```js
 var stripCssComments = require('strip-css-comments');
 
+stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
+
+```
+
+
+## API
+
+### `stripCssComments(input[, options])`
+
+Returns a `String` without any CSS comments according to the options described below.
+
+```js
 stripCssComments('body { /* unicorns */color: hotpink; }');
 //=> body { color: hotpink; }
-```
+``` 
+
+
+## Options
+
+All options are optionals and set up with usable defaults. Change them according to your needs.
+
+### `all`
+
+`Boolean` indicates if "important" CSS comments (beginning with the characters `/*!`) should be also striped in the output.
+
+Default value is `false`.
+
+```js
+stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
+//=> /*! <copyright> */ body { color: hotpink; }
+
+stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true});
+//=> body { color: hotpink; }
+``` 
 
 
 ## CLI
@@ -32,8 +63,12 @@ $ strip-css-comments --help
     strip-css-comments <input-file> > <output-file>
     strip-css-comments < <input-string>
 
+  Option
+  	-a, --all strip all comments without any exceptions
+
   Example
     strip-css-comments src/app.css > dist/app.css
+    strip-css-comments < src/app.css --all
 ```
 
 

@@ -1,9 +1,12 @@
 'use strict';
-module.exports = function (str) {
+module.exports = function (str, options) {
 	if (typeof str !== 'string') {
 		throw new TypeError('Expected a string');
 	}
 
+	options = options || {};
+
+	var preserve = !options.all;
 	var currentChar = '';
 	var insideString = false;
 	var ret = '';
@@ -23,15 +26,17 @@ module.exports = function (str) {
 
 		// start /* type comment
 		if (!insideString && currentChar + str[i + 1] === '/*') {
-			// start skipping until we reach end of comment
-			for (var j = i + 2; j < str.length; j++) {
-				if (str[j] + str[j + 1] === '*/') {
-					break;
+			if (!preserve || preserve && str[i + 2] !== '!') {
+				// start skipping until we reach end of comment
+				for (var j = i + 2; j < str.length; j++) {
+					if (str[j] + str[j + 1] === '*/') {
+						break;
+					}
 				}
+				// skip i to the end of the comment
+				i = j + 1;
+				continue;
 			}
-			// skip i to the end of the comment
-			i = j + 1;
-			continue;
 		}
 
 		ret += currentChar;
