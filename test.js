@@ -1,6 +1,10 @@
 'use strict';
 var test = require('ava');
-var strip = require('./');
+var stripCssComments = require('./');
+
+function strip(str, opts) {
+	return stripCssComments(new Buffer(str), opts).toString();
+}
 
 test(function (t) {
 	t.assert(strip('/*//comment*/body{}') === 'body{}');

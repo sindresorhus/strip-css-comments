@@ -15,11 +15,11 @@ $ npm install --save strip-css-comments
 var stripCssComments = require('strip-css-comments');
 
 // by default important comments `/*!` are preserved
-stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
+stripCssComments(new Buffer('/*! <copyright> */ body { /* unicorns */color: hotpink; }'));
 //=> '/*! <copyright> */ body { color: hotpink; }'
 
 // use the `all: true` option to strip everything
-stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true});
+stripCssComments(new Buffer('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true}));
 //=> ' body { color: hotpink; }'
 ```
 
@@ -31,9 +31,9 @@ stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {a
 ## input
 
 *Required*  
-Type: `string`
+Type: `buffer`
 
-String with CSS.
+Buffer with CSS.
 
 ## options
 
