@@ -1,9 +1,6 @@
 'use strict';
 module.exports = function (str, opts) {
-	if (typeof str !== 'string') {
-		throw new TypeError('Expected a string');
-	}
-
+	str = str.toString();
 	opts = opts || {};
 
 	var preserve = !opts.all;

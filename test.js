@@ -27,5 +27,7 @@ test(function (t) {
 	t.assert(strip('body/*!foo*/{}', {all: true}) === 'body{}');
 	t.assert(strip('body{/*!"\'\\"*/}', {all: true}) === 'body{}');
 
+	t.assert(strip(new Buffer('body{/*comment*/}')) === 'body{}');
+
 	t.end();
 });
