@@ -7,7 +7,7 @@ Also available as a [gulp](https://github.com/sindresorhus/gulp-strip-css-commen
 
 ## Usage
 
-```sh
+```
 $ npm install --save strip-css-comments
 ```
 
@@ -47,7 +47,7 @@ Whether *important* CSS comments *(those starting with `/*!`)* should be strippe
 
 ## CLI
 
-```sh
+```
 $ npm install --global strip-css-comments
 ```
 
@@ -55,28 +55,28 @@ $ npm install --global strip-css-comments
 $ strip-css-comments --help
 
   Usage
-    strip-css-comments <input-file> > <output-file>
-    strip-css-comments < <input-string>
+    $ strip-css-comments <input-file> > <output-file>
+    $ strip-css-comments < <input-string>
 
   Option
     -a, --all  Strip all comments including `/*!`
 
   Example
-    strip-css-comments src/app.css > dist/app.css
-    strip-css-comments < src/app.css --all
+    $ strip-css-comments src/app.css > dist/app.css
+    $ strip-css-comments < src/app.css --all
 ```
 
 
 ## Benchmark
 
-```sh
+```
 $ npm run bench
 ```
 
 
 ## Related
 
-- [`strip-json-comments`](https://github.com/sindresorhus/strip-json-comments)
+- [strip-json-comments](https://github.com/sindresorhus/strip-json-comments)
 
 
 ## License

@@ -24,7 +24,6 @@
   "keywords": [
     "cli-app",
     "cli",
-    "bin",
     "css",
     "style",
     "stylesheet",
@@ -39,7 +38,7 @@
   ],
   "dependencies": {
     "get-stdin": "^4.0.1",
-    "meow": "^3.0.0"
+    "meow": "^3.3.0"
   },
   "devDependencies": {
     "ava": "0.0.4",

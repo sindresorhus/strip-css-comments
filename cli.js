@@ -8,20 +8,20 @@ var stripCssComments = require('./');
 var cli = meow({
 	help: [
 		'Usage',
-		'  strip-css-comments <input-file> > <output-file>',
-		'  strip-css-comments < <input-string>',
+		'  $ strip-css-comments <input-file> > <output-file>',
+		'  $ strip-css-comments < <input-string>',
 		'',
 		'Option',
 		'  -a, --all  Strip all comments including `/*!`',
 		'',
 		'Example',
-		'  strip-css-comments src/app.css > dist/app.css',
-		'  strip-css-comments < src/app.css --all'
-	].join('\n')
+		'  $ strip-css-comments src/app.css > dist/app.css',
+		'  $ strip-css-comments < src/app.css --all'
+	]
 }, {
 	string: ['_'],
 	boolean: ['all'],
-	alias: {'all': 'a'}
+	alias: {all: 'a'}
 });
 
 function init(data) {
