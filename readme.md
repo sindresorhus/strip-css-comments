@@ -22,7 +22,7 @@ stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true});
 //=> ' body { color: hotpink; }'
 
-// use the `filter: function(comment){...}`
+// use the `filter: function(comment){...}` to selectively strip comments
 stripCssComments('/* unicorns */ body {/*##unicorns##*/ color: hotpink; }', {filter: function(comment){return /^##unicorns##/.test(comment);}});
 //=> '/* unicorns */ body { color: hotpink; }'
 ```
