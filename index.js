@@ -6,6 +6,11 @@ module.exports = function (str, opts) {
 	var preserve = !opts.all;
 	var currentChar = '';
 	var insideString = false;
+
+    var filter = !!(opts.filter && opts.filter.constructor && opts.filter.call && opts.filter.apply);
+    var filtering = false;
+    
+    var comment = '';
 	var ret = '';
 
 	for (var i = 0; i < str.length; i++) {
@@ -26,9 +31,20 @@ module.exports = function (str, opts) {
 			if (!preserve || preserve && str[i + 2] !== '!') {
 				// start skipping until we reach end of comment
 				for (var j = i + 2; j < str.length; j++) {
-					if (str[j] + str[j + 1] === '*/') {
-						break;
-					}
+                    if (str[j] + str[j + 1] === '*/') {
+                        if (filtering){
+                            filtering = false;
+                            ret = opts.filter(comment) ? ret : ret += ('/*' + comment + '*/'); 
+                            comment = '';                    
+                        }
+
+                        break;
+                    }
+
+                    if (filter) {
+                        filtering = true;
+                        comment += str[j];
+                    }
 				}
 				// skip i to the end of the comment
 				i = j + 1;
@@ -36,7 +52,7 @@ module.exports = function (str, opts) {
 			}
 		}
 
-		ret += currentChar;
+        if (!filtering){ret += currentChar;}
 	}
 
 	return ret;

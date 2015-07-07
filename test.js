@@ -29,5 +29,18 @@ test(function (t) {
 
 	t.assert(strip(new Buffer('body{/*comment*/}')) === 'body{}');
 
+    t.assert(
+        strip('body{/*##foo##*/}', {
+                filter: function(comment){return /^##foo##/.test(comment);}
+        }) === 'body{}');
+    t.assert(
+        strip('body{/*foo*/}', {
+                filter: function(comment){return /^##foo##/.test(comment);}
+        }) === 'body{/*foo*/}');
+    t.assert(
+        strip('body{/*##foo##*//*foo*/}', {
+                filter: function(comment){return /^##foo##/.test(comment);}
+        }) === 'body{/*foo*/}');
+
 	t.end();
 });

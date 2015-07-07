@@ -44,6 +44,12 @@ Default: `false`
 
 Whether *important* CSS comments *(those starting with `/*!`)* should be stripped.
 
+### filter
+
+Type: `function`  
+Default: `undefined`
+
+A function that gets the comment contents and returns a boolean whether to strip the comment. If `true`, the comment is stripped. If `false`, the comment is preserved.
 
 ## CLI
 
