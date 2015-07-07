@@ -21,6 +21,10 @@ stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
 // use the `all: true` option to strip everything
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true});
 //=> ' body { color: hotpink; }'
+
+// use the `filter: function(comment){...}`
+stripCssComments('/* unicorns */ body {/*##unicorns##*/ color: hotpink; }', {filter: function(comment){return /^##unicorns##/.test(comment);}});
+//=> '/* unicorns */ body { color: hotpink; }'
 ```
 
 
