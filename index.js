@@ -7,7 +7,7 @@ module.exports = function (str, opts) {
 	var currentChar = '';
 	var insideString = false;
 
-	var filter = !!(opts.filter && opts.filter.constructor && opts.filter.call && opts.filter.apply);
+	var filter = typeof opts.filter === 'function';
 	var filtering = false;
 	
 	var comment = '';
@@ -29,10 +29,10 @@ module.exports = function (str, opts) {
 		// start /* type comment
 		if (!insideString && currentChar + str[i + 1] === '/*') {
 			if (!preserve || preserve && str[i + 2] !== '!') {
-				// start skipping until we reach end of comment
+				// process comment
 				for (var j = i + 2; j < str.length; j++) {
 					if (str[j] + str[j + 1] === '*/') {
-						if (filtering){
+						if (filtering) {
 							filtering = false;
 							ret = opts.filter(comment) ? ret : ret += ('/*' + comment + '*/'); 
 							comment = '';                    
@@ -52,7 +52,9 @@ module.exports = function (str, opts) {
 			}
 		}
 
-		if (!filtering){ret += currentChar;}
+		if (!filtering) {
+			ret += currentChar;
+		}
 	}
 
 	return ret;

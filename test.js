@@ -41,6 +41,26 @@ test(function (t) {
         strip('body{/*##foo##*//*foo*/}', {
                 filter: function(comment){return /^##foo##/.test(comment);}
         }) === 'body{/*foo*/}');
-
+    t.assert(
+        strip('body{/*##foo##*//*foo*/}', {
+                all: true,
+                filter: function(comment){return /^##foo##/.test(comment);}
+        }) === 'body{/*foo*/}');
+    t.assert(
+        strip('body{/*##foo##*//*!foo*/}', {
+                all: true,
+                filter: function(comment){return /^##foo##/.test(comment);}
+        }) === 'body{/*!foo*/}');
+    t.assert(
+        strip('body{/*!##foo##*//*foo*/}', {
+                all: true,
+                filter: function(comment){return /^##foo##/.test(comment);}
+        }) === 'body{/*!##foo##*//*foo*/}');
+    t.assert(
+        strip('body{/*!##foo##*//*foo*/}', {
+                all: true,
+                filter: function(comment){return /^!##foo##/.test(comment);}
+        }) === 'body{/*foo*/}');
+    
 	t.end();
 });
