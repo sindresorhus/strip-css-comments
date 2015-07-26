@@ -3,15 +3,25 @@ module.exports = function (str, opts) {
 	str = str.toString();
 	opts = opts || {};
 
-	var preserve = !opts.all;
+	var comment = '';
 	var currentChar = '';
 	var insideString = false;
-
-	var filter = typeof opts.filter === 'function';
-	var filtering = false;
-	
-	var comment = '';
+	var preserveFilter;
+	var preserveImportant = (opts.preserve === false || opts.all === true) ? false : true;
 	var ret = '';
+
+	//use preserveFilter as an interface for opts.preserve function and RegExp values
+	if (opts !== undefined && opts.preserve !== undefined) {
+		if ((typeof opts.preserve).toLowerCase() === 'function') {
+			preserveImportant = false;
+			preserveFilter = opts.preserve;
+		} else if ((opts.preserve.constructor.name).toLowerCase() === 'regexp') {
+			preserveImportant = false;
+			preserveFilter = function (comment) {
+				return opts.preserve.test(comment);
+			};
+		}
+	}
 
 	for (var i = 0; i < str.length; i++) {
 		currentChar = str[i];
@@ -26,35 +36,35 @@ module.exports = function (str, opts) {
 			}
 		}
 
-		// start /* type comment
-		if (!insideString && currentChar + str[i + 1] === '/*') {
-			if (!preserve || preserve && str[i + 2] !== '!') {
-				// process comment
+		//find beginning of /* type comment
+		if (!insideString && currentChar === '/' && str[i + 1] === '*') {
+			//ignore important comment when configured to preserve comments using important syntax: /*!
+			if (!(preserveImportant && str[i + 2] === '!')) {
+				// iterate over comment
 				for (var j = i + 2; j < str.length; j++) {
-					if (str[j] + str[j + 1] === '*/') {
-						if (filtering) {
-							filtering = false;
-							ret = opts.filter(comment) ? ret : ret += ('/*' + comment + '*/'); 
-							comment = '';                    
+					//find end of comment
+					if (str[j] === '*' && str[j + 1] === '/') {
+						if (preserveFilter) {
+							//evaluate comment text
+							ret = preserveFilter(comment) ? ret += ('/*' + comment + '*/') : ret;
+							comment = '';
 						}
 
 						break;
 					}
 
-					if (filter) {
-						filtering = true;
+					//store comment text to be evaluated by the filter when the end of the comment is reached
+					if (preserveFilter) {
 						comment += str[j];
 					}
 				}
-				// skip i to the end of the comment
+				//resume iteration over CSS string from the end of the comment
 				i = j + 1;
 				continue;
 			}
 		}
 
-		if (!filtering) {
-			ret += currentChar;
-		}
+		ret += currentChar;
 	}
 
 	return ret;

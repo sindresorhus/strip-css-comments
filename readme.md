@@ -18,15 +18,28 @@ var stripCssComments = require('strip-css-comments');
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
 //=> '/*! <copyright> */ body { color: hotpink; }'
 
-// use the `all: true` option to strip everything
-stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true});
-//=> ' body { color: hotpink; }'
+//assign the preserve option `false` to strip all comments including `/*!`
+stripCssComments(
+	'/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
+	{preserve: false}
+);
+//=> 'body { color: hotpink; }'
 
-// use the `filter: function(comment){...}` to selectively strip comments
-stripCssComments('/* unicorns */ body {/*##unicorns##*/ color: hotpink; }', {filter: function(comment){return /^##unicorns##/.test(comment);}});
-//=> '/* unicorns */ body { color: hotpink; }'
+//assign the preserve option a regular expression to strip comments not matching the pattern
+stripCssComments(
+	'/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
+	{preserve: /^\\!/}
+);
+//=> '/*! <copyright> */ body { color: hotpink; }'
+
+//assign the preserve option a function that returns `true` to preserve the comment or `false` to strip the comment
+stripCssComments(
+	'/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
+	{preserve: function(comment){/^\\!/.test(comment);}}
+);
+//=> '/*! <copyright> */ body { color: hotpink; }'
+
 ```
-
 
 ## API
 
@@ -39,21 +52,19 @@ Type: `string`
 
 String with CSS.
 
+
 ## options
 
-### all
+### preserve
 
-Type: `boolean`  
-Default: `false`
+Type: `boolean`, `RegExp`, or `function` 
+Default: `true`
 
-Whether *important* CSS comments *(those starting with `/*!`)* should be stripped.
+- `preserve: true` &mdash; (default) preserve comments that use the `/*! */` syntax;
+- `preserve: false` &mdash; strip all comments;
+- `preserve: [RegExp]` &mdash; preserve comments that match a regular expression. The comment text but not the comment syntax (`/**/`) will be tested by the RegExp.
+- `preserve: function (comment) { ... }` &mdash; a function that returns `true` to preserve the comment or `false` to strip it. The comment is invoked with a single argument, the string found between the comment syntax, `/**/`.
 
-### filter
-
-Type: `function`  
-Default: `undefined`
-
-A function that gets the comment contents and returns a boolean whether to strip the comment. If `true`, the comment is stripped. If `false`, the comment is preserved.
 
 ## CLI
 
@@ -76,13 +87,11 @@ $ strip-css-comments --help
     $ strip-css-comments < src/app.css --all
 ```
 
-
 ## Benchmark
 
 ```
 $ npm run bench
 ```
-
 
 ## Related
 
