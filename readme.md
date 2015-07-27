@@ -28,18 +28,19 @@ stripCssComments(
 //assign the preserve option a regular expression to strip comments not matching the pattern
 stripCssComments(
 	'/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
-	{preserve: /^\\!/}
+	{preserve: /^\!/}
 );
 //=> '/*! <copyright> */ body { color: hotpink; }'
 
 //assign the preserve option a function that returns `true` to preserve the comment or `false` to strip the comment
 stripCssComments(
 	'/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
-	{preserve: function(comment){/^\\!/.test(comment);}}
+	{preserve: function(comment){/^\!/.test(comment);}}
 );
 //=> '/*! <copyright> */ body { color: hotpink; }'
 
 ```
+
 
 ## API
 
@@ -52,7 +53,6 @@ Type: `string`
 
 String with CSS.
 
-
 ## options
 
 ### preserve
@@ -60,10 +60,10 @@ String with CSS.
 Type: `boolean`, `RegExp`, or `function` 
 Default: `true`
 
-- `preserve: true` &mdash; (default) preserve comments that use the `/*! */` syntax;
-- `preserve: false` &mdash; strip all comments;
-- `preserve: [RegExp]` &mdash; preserve comments that match a regular expression. The comment text but not the comment syntax (`/**/`) will be tested by the RegExp.
-- `preserve: function (comment) { ... }` &mdash; a function that returns `true` to preserve the comment or `false` to strip it. The comment is invoked with a single argument, the string found between the comment syntax, `/**/`.
+- `preserve: true` - (default) preserve comments that use the `/*! */` syntax;
+- `preserve: false` - strip all comments;
+- `preserve: [RegExp]` - preserve comments that match a regular expression. The comment text but not the comment syntax (`/**/`) will be tested by the RegExp.
+- `preserve: function (comment) { ... }` - a function that returns `true` to preserve the comment or `false` to strip it. The comment is invoked with a single argument, the string found between the comment syntax, `/**/`.
 
 
 ## CLI
@@ -75,23 +75,25 @@ $ npm install --global strip-css-comments
 ```
 $ strip-css-comments --help
 
-  Usage
-    $ strip-css-comments <input-file> > <output-file>
-    $ strip-css-comments < <input-string>
+	Usage
+		$ strip-css-comments <input-file> > <output-file>
+		$ strip-css-comments < <input-string>
 
-  Option
-    -a, --all  Strip all comments including `/*!`
+	Option
+		-a, --all  Strip all comments including `/*!`
 
-  Example
-    $ strip-css-comments src/app.css > dist/app.css
-    $ strip-css-comments < src/app.css --all
+	Example
+		$ strip-css-comments src/app.css > dist/app.css
+		$ strip-css-comments < src/app.css --all
 ```
+
 
 ## Benchmark
 
 ```
 $ npm run bench
 ```
+
 
 ## Related
 

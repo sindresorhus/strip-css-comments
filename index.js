@@ -7,20 +7,18 @@ module.exports = function (str, opts) {
 	var currentChar = '';
 	var insideString = false;
 	var preserveFilter;
-	var preserveImportant = (opts.preserve === false || opts.all === true) ? false : true;
+	var preserveImportant = !(opts.preserve === false || opts.all === true);
 	var ret = '';
 
-	//use preserveFilter as an interface for opts.preserve function and RegExp values
-	if (opts !== undefined && opts.preserve !== undefined) {
-		if ((typeof opts.preserve).toLowerCase() === 'function') {
-			preserveImportant = false;
-			preserveFilter = opts.preserve;
-		} else if ((opts.preserve.constructor.name).toLowerCase() === 'regexp') {
-			preserveImportant = false;
-			preserveFilter = function (comment) {
-				return opts.preserve.test(comment);
-			};
-		}
+	// use preserveFilter as an interface for opts.preserve function and RegExp valuess
+	if (typeof opts.preserve === 'function') {
+		preserveImportant = false;
+		preserveFilter = opts.preserve;
+	} else if (opts.preserve instanceof RegExp) {
+		preserveImportant = false;
+		preserveFilter = function (comment) {
+			return opts.preserve.test(comment);
+		};
 	}
 
 	for (var i = 0; i < str.length; i++) {
@@ -36,29 +34,29 @@ module.exports = function (str, opts) {
 			}
 		}
 
-		//find beginning of /* type comment
+		// find beginning of /* type comment
 		if (!insideString && currentChar === '/' && str[i + 1] === '*') {
-			//ignore important comment when configured to preserve comments using important syntax: /*!
+			// ignore important comment when configured to preserve comments using important syntax: /*!
 			if (!(preserveImportant && str[i + 2] === '!')) {
 				// iterate over comment
 				for (var j = i + 2; j < str.length; j++) {
-					//find end of comment
+					// find end of comment
 					if (str[j] === '*' && str[j + 1] === '/') {
 						if (preserveFilter) {
 							//evaluate comment text
-							ret = preserveFilter(comment) ? ret += ('/*' + comment + '*/') : ret;
+							ret = preserveFilter(comment) ? ret + ('/*' + comment + '*/') : ret;
 							comment = '';
 						}
 
 						break;
 					}
 
-					//store comment text to be evaluated by the filter when the end of the comment is reached
+					// store comment text to be evaluated by the filter when the end of the comment is reached
 					if (preserveFilter) {
 						comment += str[j];
 					}
 				}
-				//resume iteration over CSS string from the end of the comment
+				// resume iteration over CSS string from the end of the comment
 				i = j + 1;
 				continue;
 			}

@@ -38,32 +38,32 @@ test(function (t) {
 
 	t.assert(strip(new Buffer('body{/*comment*/}')) === 'body{}');
 
-    t.assert(strip('body{/*##foo##*/}', {preserve: /^##foo##/}) === 'body{/*##foo##*/}');
-    t.assert(strip('body{/*foo*/}', {preserve: /^##foo##/}) === 'body{}');
-    t.assert(strip('body{/*##foo##*//*foo*/}', {preserve: /^##foo##/}) === 'body{/*##foo##*/}');
-    t.assert(strip('body{/*##foo##*//*!foo*/}', {preserve: /^##foo##/}) === 'body{/*##foo##*/}');
-    t.assert(strip('body{/*!##foo##*//*foo*/}', {preserve: /^##foo##/}) === 'body{}');
+	t.assert(strip('body{/*##foo##*/}', {preserve: /^##foo##/}) === 'body{/*##foo##*/}');
+	t.assert(strip('body{/*foo*/}', {preserve: /^##foo##/}) === 'body{}');
+	t.assert(strip('body{/*##foo##*//*foo*/}', {preserve: /^##foo##/}) === 'body{/*##foo##*/}');
+	t.assert(strip('body{/*##foo##*//*!foo*/}', {preserve: /^##foo##/}) === 'body{/*##foo##*/}');
+	t.assert(strip('body{/*!##foo##*//*foo*/}', {preserve: /^##foo##/}) === 'body{}');
 
-    t.assert(
-        strip('body{/*##foo##*/}', {
-                preserve: function(comment){return /^##foo##/.test(comment);}
-        }) === 'body{/*##foo##*/}');
-    t.assert(
-        strip('body{/*foo*/}', {
-                preserve: function(comment){return /^##foo##/.test(comment);}
-        }) === 'body{}');
-    t.assert(
-        strip('body{/*##foo##*//*foo*/}', {
-                preserve: function(comment){return /^##foo##/.test(comment);}
-        }) === 'body{/*##foo##*/}');
-    t.assert(
-        strip('body{/*##foo##*//*!foo*/}', {
-                preserve: function(comment){return /^##foo##/.test(comment);}
-        }) === 'body{/*##foo##*/}');
-    t.assert(
-        strip('body{/*!##foo##*//*foo*/}', {
-                preserve: function(comment){return /^##foo##/.test(comment);}
-        }) === 'body{}');
+	t.assert(
+		strip('body{/*##foo##*/}', {
+				preserve: function(comment){return /^##foo##/.test(comment);}
+		}) === 'body{/*##foo##*/}');
+	t.assert(
+		strip('body{/*foo*/}', {
+				preserve: function(comment){return /^##foo##/.test(comment);}
+		}) === 'body{}');
+	t.assert(
+		strip('body{/*##foo##*//*foo*/}', {
+				preserve: function(comment){return /^##foo##/.test(comment);}
+		}) === 'body{/*##foo##*/}');
+	t.assert(
+		strip('body{/*##foo##*//*!foo*/}', {
+				preserve: function(comment){return /^##foo##/.test(comment);}
+		}) === 'body{/*##foo##*/}');
+	t.assert(
+		strip('body{/*!##foo##*//*foo*/}', {
+				preserve: function(comment){return /^##foo##/.test(comment);}
+		}) === 'body{}');
 
 	t.end();
 });
