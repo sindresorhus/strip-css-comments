@@ -1,4 +1,6 @@
 'use strict';
+var isRegExp = require('is-regexp');
+
 module.exports = function (str, opts) {
 	str = str.toString();
 	opts = opts || {};
@@ -14,7 +16,7 @@ module.exports = function (str, opts) {
 	if (typeof opts.preserve === 'function') {
 		preserveImportant = false;
 		preserveFilter = opts.preserve;
-	} else if (opts.preserve instanceof RegExp) {
+	} else if (isRegExp(opts.preserve)) {
 		preserveImportant = false;
 		preserveFilter = function (comment) {
 			return opts.preserve.test(comment);
