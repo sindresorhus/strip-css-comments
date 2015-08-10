@@ -38,6 +38,7 @@
   ],
   "dependencies": {
     "get-stdin": "^4.0.1",
+    "is-regexp": "^1.0.0",
     "meow": "^3.3.0"
   },
   "devDependencies": {

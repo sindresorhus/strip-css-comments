@@ -18,9 +18,26 @@ var stripCssComments = require('strip-css-comments');
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
 //=> '/*! <copyright> */ body { color: hotpink; }'
 
-// use the `all: true` option to strip everything
-stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }', {all: true});
-//=> ' body { color: hotpink; }'
+// assign the preserve option `false` to strip all comments including `/*!`
+stripCssComments(
+  '/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
+  {preserve: false}
+);
+//=> 'body { color: hotpink; }'
+
+// assign the preserve option a regular expression to strip comments not matching the pattern
+stripCssComments(
+  '/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
+  {preserve: /^\!/}
+);
+//=> '/*! <copyright> */ body { color: hotpink; }'
+
+// assign the preserve option a function that returns `true` to preserve the comment or `false` to strip the comment
+stripCssComments(
+  '/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
+  {preserve: function(comment){/^\!/.test(comment);}}
+);
+//=> '/*! <copyright> */ body { color: hotpink; }'
 ```
 
 
@@ -37,12 +54,15 @@ String with CSS.
 
 ## options
 
-### all
+### preserve
 
-Type: `boolean`  
-Default: `false`
+Type: `boolean`, `RegExp`, or `function`  
+Default: `true`
 
-Whether *important* CSS comments *(those starting with `/*!`)* should be stripped.
+- `preserve: true` - (default) preserve comments that use the `/*! */` syntax;
+- `preserve: false` - strip all comments;
+- `preserve: [RegExp]` - preserve comments that match a regular expression. The comment text but not the comment syntax (`/**/`) will be tested by the RegExp.
+- `preserve: function (comment) { ... }` - a function that returns `true` to preserve the comment or `false` to strip it. The comment is invoked with a single argument, the string found between the comment syntax (`/**/`).
 
 
 ## CLI
