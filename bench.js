@@ -7,3 +7,7 @@ var fixture = fs.readFileSync('fixture.css', 'utf8');
 bench('strip CSS comments', function () {
 	stripCssComments(fixture);
 });
+
+bench('preserve option', function () {
+	stripCssComments(fixture, {preserve: /^!/});
+});
