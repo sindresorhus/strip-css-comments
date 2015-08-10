@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "node test.js",
+    "test": "xo && node test.js",
     "bench": "matcha bench.js"
   },
   "files": [
@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "ava": "0.0.4",
-    "matcha": "^0.6.0"
+    "matcha": "^0.6.0",
+    "xo": "*"
   }
 }
