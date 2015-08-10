@@ -18,26 +18,30 @@ var stripCssComments = require('strip-css-comments');
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
 //=> '/*! <copyright> */ body { color: hotpink; }'
 
-// assign the preserve option `false` to strip all comments including `/*!`
+// `preserve: false` will strip all comments including `/*!`
 stripCssComments(
-  '/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
-  {preserve: false}
+	'/*! <copyright> */ body { /* unicorns */color: hotpink; }',
+	{preserve: false}
 );
 //=> 'body { color: hotpink; }'
 
-// assign the preserve option a regular expression to strip comments not matching the pattern
+// preserve comments based on a regex
 stripCssComments(
-  '/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
-  {preserve: /^\!/}
+	'/*# preserved */ body { /* unicorns */color: hotpink; }',
+	{preserve: /^#/}
 );
-//=> '/*! <copyright> */ body { color: hotpink; }'
+//=> '/*# preserved */ body { color: hotpink; }'
 
-// assign the preserve option a function that returns `true` to preserve the comment or `false` to strip the comment
+// preserve comments based on the return value of the supplied function
 stripCssComments(
-  '/*! <copyright> */ body { /* unicorns */color: hotpink; }', 
-  {preserve: function(comment){/^\!/.test(comment);}}
+	'/*# preserved */ body { /* unicorns */color: hotpink; }',
+	{
+		preserve: function (comment) {
+			return comment.charAt(0) === '#';
+		}
+	}
 );
-//=> '/*! <copyright> */ body { color: hotpink; }'
+//=> '/*# preserved */ body { color: hotpink; }'
 ```
 
 
@@ -56,13 +60,13 @@ String with CSS.
 
 ### preserve
 
-Type: `boolean`, `RegExp`, or `function`  
+Type: `boolean`, `RegExp`, `function`  
 Default: `true`
 
-- `preserve: true` - (default) preserve comments that use the `/*! */` syntax;
-- `preserve: false` - strip all comments;
-- `preserve: [RegExp]` - preserve comments that match a regular expression. The comment text but not the comment syntax (`/**/`) will be tested by the RegExp.
-- `preserve: function (comment) { ... }` - a function that returns `true` to preserve the comment or `false` to strip it. The comment is invoked with a single argument, the string found between the comment syntax (`/**/`).
+- `true` - Preserve comments that use the `/*! */` syntax
+- `false` - Strip all comments
+- `RegExp` - Preserve comments where the comment body matches a regular expression.
+- `Function` - Preserve comments for which a function returns `true`. The function is called on each comment, gets the comment body as the first argument, and is expected to return a boolean of whether to preserve the comment.
 
 
 ## CLI

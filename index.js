@@ -5,14 +5,13 @@ module.exports = function (str, opts) {
 	str = str.toString();
 	opts = opts || {};
 
+	var preserveFilter;
 	var comment = '';
 	var currentChar = '';
 	var insideString = false;
-	var preserveFilter;
 	var preserveImportant = !(opts.preserve === false || opts.all === true);
 	var ret = '';
 
-	// use preserveFilter as an interface for opts.preserve function and RegExp valuess
 	if (typeof opts.preserve === 'function') {
 		preserveImportant = false;
 		preserveFilter = opts.preserve;
@@ -40,12 +39,14 @@ module.exports = function (str, opts) {
 		if (!insideString && currentChar === '/' && str[i + 1] === '*') {
 			// ignore important comment when configured to preserve comments using important syntax: /*!
 			if (!(preserveImportant && str[i + 2] === '!')) {
+				var j = i + 2;
+
 				// iterate over comment
-				for (var j = i + 2; j < str.length; j++) {
+				for (; j < str.length; j++) {
 					// find end of comment
 					if (str[j] === '*' && str[j + 1] === '/') {
 						if (preserveFilter) {
-							//evaluate comment text
+							// evaluate comment text
 							ret = preserveFilter(comment) ? ret + ('/*' + comment + '*/') : ret;
 							comment = '';
 						}
@@ -58,8 +59,10 @@ module.exports = function (str, opts) {
 						comment += str[j];
 					}
 				}
+
 				// resume iteration over CSS string from the end of the comment
 				i = j + 1;
+
 				continue;
 			}
 		}
