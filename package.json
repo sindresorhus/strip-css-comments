@@ -9,7 +9,6 @@
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
   },
-  "bin": "cli.js",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -18,12 +17,9 @@
     "bench": "matcha bench.js"
   },
   "files": [
-    "index.js",
-    "cli.js"
+    "index.js"
   ],
   "keywords": [
-    "cli-app",
-    "cli",
     "css",
     "style",
     "stylesheet",
@@ -37,9 +33,7 @@
     "string"
   ],
   "dependencies": {
-    "get-stdin": "^4.0.1",
-    "is-regexp": "^1.0.0",
-    "meow": "^3.3.0"
+    "is-regexp": "^1.0.0"
   },
   "devDependencies": {
     "ava": "0.0.4",

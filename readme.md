@@ -69,28 +69,6 @@ Default: `true`
 - `Function` - Preserve comments for which a function returns `true`. The function is called on each comment, gets the comment body as the first argument, and is expected to return a boolean of whether to preserve the comment.
 
 
-## CLI
-
-```
-$ npm install --global strip-css-comments
-```
-
-```
-$ strip-css-comments --help
-
-  Usage
-    $ strip-css-comments <input-file> > <output-file>
-    $ strip-css-comments < <input-string>
-
-  Option
-    -a, --all  Strip all comments including `/*!`
-
-  Example
-    $ strip-css-comments src/app.css > dist/app.css
-    $ strip-css-comments < src/app.css --all
-```
-
-
 ## Benchmark
 
 ```
@@ -100,7 +78,8 @@ $ npm run bench
 
 ## Related
 
-- [strip-json-comments](https://github.com/sindresorhus/strip-json-comments)
+- [strip-css-comments-cli](https://github.com/sindresorhus/strip-css-comments-cli) - CLI for this module
+- [strip-json-comments](https://github.com/sindresorhus/strip-json-comments) - Strip comments from JSON
 
 
 ## License
