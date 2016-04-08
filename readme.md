@@ -15,7 +15,7 @@ $ npm install --save strip-css-comments
 ## Usage
 
 ```js
-var stripCssComments = require('strip-css-comments');
+const stripCssComments = require('strip-css-comments');
 
 // by default important comments `/*!` are preserved
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
@@ -39,9 +39,7 @@ stripCssComments(
 stripCssComments(
 	'/*# preserved */ body { /* unicorns */color: hotpink; }',
 	{
-		preserve: function (comment) {
-			return comment.charAt(0) === '#';
-		}
+		preserve: comment => comment.charAt(0) === '#'
 	}
 );
 //=> '/*# preserved */ body { color: hotpink; }'
@@ -54,7 +52,6 @@ stripCssComments(
 
 ## input
 
-*Required*  
 Type: `string`
 
 String with CSS.
@@ -63,7 +60,7 @@ String with CSS.
 
 ### preserve
 
-Type: `boolean`, `RegExp`, `function`  
+Type: `boolean`, `RegExp`, `function`<br>
 Default: `true`
 
 - `true` - Preserve important comments `/*! */`.
@@ -87,4 +84,4 @@ $ npm run bench
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
