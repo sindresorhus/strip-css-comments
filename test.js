@@ -73,3 +73,9 @@ test(t => {
 		}), 'body{}'
 	);
 });
+
+test.failing('strips trailing comment newline', t => {
+	t.is(m('/* foo */\n\nbody{}'), '\nbody{}');
+	t.is(m('/* foo */\r\n\r\nbody{}'), '\nbody{}');
+	t.is(m('/*! foo */\r\n\r\nbody{}'), '/*! foo */\r\n\r\nbody{}');
+});
