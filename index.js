@@ -71,8 +71,10 @@ module.exports = function (str, opts) {
 		ret += currentChar;
 	}
 
-	if (keepWhitespaces == true) {
-		return ret.replace(/^\s*\n/gm, "");
+	if (keepWhitespaces === true) {
+		return ret.replace(/^\s*\n/gm, '');
 	}
-	else return ret;
+	else {
+		return ret;
+	}
 };
