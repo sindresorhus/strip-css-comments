@@ -10,7 +10,7 @@ module.exports = function (str, opts) {
 	var currentChar = '';
 	var insideString = false;
 	var preserveImportant = !(opts.preserve === false || opts.all === true);
-	var keepWhitespaces = opts.whitespace || true;
+	var keepWhitespaces = opts.whitespace || false;
 	var ret = '';
 
 	if (typeof opts.preserve === 'function') {
@@ -71,10 +71,5 @@ module.exports = function (str, opts) {
 		ret += currentChar;
 	}
 
-	if (keepWhitespaces === true) {
-		return ret.replace(/^\s*\n/gm, '');
-	}
-	else {
-		return ret;
-	}
+	return keepWhitespaces ? ret.replace(/^\s*\n/gm, "") : ret;
 };
