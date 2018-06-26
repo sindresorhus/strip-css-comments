@@ -4,6 +4,8 @@ const isRegExp = require('is-regexp');
 module.exports = (input, options = {}) => {
 	let preserveImportant = !(options.preserve === false || options.all === true);
 
+	const stripWhitespace = options.whitespace === false;
+
 	let preserveFilter;
 	if (typeof options.preserve === 'function') {
 		preserveImportant = false;
@@ -41,10 +43,16 @@ module.exports = (input, options = {}) => {
 				for (; j < input.length; j++) {
 					// Find end of comment
 					if (input[j] === '*' && input[j + 1] === '/') {
-						if (preserveFilter) {
+						if (preserveFilter && preserveFilter(comment)) {
 							// Evaluate comment text
-							returnValue = preserveFilter(comment) ? returnValue + ('/*' + comment + '*/') : returnValue;
+							returnValue += '/*' + comment + '*/';
 							comment = '';
+						} else if (stripWhitespace) {
+							if (input[j + 2] === '\n') {
+								j++;
+							} else if (input[j + 2] + input[j + 3] === '\r\n') {
+								j += 2;
+							}
 						}
 
 						break;

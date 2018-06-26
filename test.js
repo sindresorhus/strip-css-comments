@@ -70,10 +70,11 @@ test('main', t => {
 			preserve: comment => comment.startsWith('##foo##')
 		}), 'body{}'
 	);
-});
 
-test.failing('strips trailing comment newline', t => {
-	t.is(m('/* foo */\n\nbody{}'), '\nbody{}');
-	t.is(m('/* foo */\r\n\r\nbody{}'), '\nbody{}');
-	t.is(m('/*! foo */\r\n\r\nbody{}'), '/*! foo */\r\n\r\nbody{}');
+	t.is(m('/* foo */\n\nbody{}', {whitespace: false}), '\nbody{}');
+	t.is(m('/* foo */\r\n\r\nbody{}', {whitespace: false}), '\r\nbody{}');
+	t.is(m('/*! foo */\r\n\r\nbody{}', {whitespace: false}), '/*! foo */\r\n\r\nbody{}');
+
+	t.is(m('/*##foo##*/\nbody{}', {preserve: /^##foo##/, whitespace: false}), '/*##foo##*/\nbody{}');
+	t.is(m('/*##foo##*/\r\nbody{}', {preserve: /^##foo##/, whitespace: false}), '/*##foo##*/\r\nbody{}');
 });

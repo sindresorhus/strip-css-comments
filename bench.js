@@ -12,3 +12,7 @@ bench('strip CSS comments', () => {
 bench('preserve option', () => {
 	stripCssComments(fixture, {preserve: /^!/});
 });
+
+bench('whitespace option', () => {
+	stripCssComments(fixture, {whitespace: false});
+});
