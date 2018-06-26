@@ -17,7 +17,7 @@ $ npm install strip-css-comments
 ```js
 const stripCssComments = require('strip-css-comments');
 
-// by default important comments `/*!` are preserved
+// By default important comments `/*!` are preserved
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');
 //=> '/*! <copyright> */ body { color: hotpink; }'
 
@@ -28,14 +28,14 @@ stripCssComments(
 );
 //=> 'body { color: hotpink; }'
 
-// preserve comments based on a regex
+// Preserve comments based on a regex
 stripCssComments(
 	'/*# preserved */ body { /* unicorns */color: hotpink; }',
 	{preserve: /^#/}
 );
 //=> '/*# preserved */ body { color: hotpink; }'
 
-// preserve comments based on the return value of the supplied function
+// Preserve comments based on the return value of the supplied function
 stripCssComments(
 	'/*# preserved */ body { /* unicorns */color: hotpink; }',
 	{
@@ -58,9 +58,11 @@ String with CSS.
 
 ## options
 
+Type: `Object`
+
 ### preserve
 
-Type: `boolean`, `RegExp`, `function`<br>
+Type: `boolean` `RegExp` `Function`<br>
 Default: `true`
 
 - `true` - Preserve important comments `/*! */`.

@@ -35,8 +35,6 @@ test('main', t => {
 	t.is(m('body/*!foo*/{}', {preserve: false}), 'body{}');
 	t.is(m('body{/*!"\'\\"*/}', {preserve: false}), 'body{}');
 
-	t.is(m(Buffer.from('body{/*comment*/}')), 'body{}');
-
 	t.is(m('body{/*##foo##*/}', {preserve: /^##foo##/}), 'body{/*##foo##*/}');
 	t.is(m('body{/*foo*/}', {preserve: /^##foo##/}), 'body{}');
 	t.is(m('body{/*##foo##*//*foo*/}', {preserve: /^##foo##/}), 'body{/*##foo##*/}');
