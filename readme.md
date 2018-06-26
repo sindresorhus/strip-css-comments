@@ -8,7 +8,7 @@ Also available as a [gulp](https://github.com/sindresorhus/gulp-strip-css-commen
 ## Usage
 
 ```
-$ npm install --save strip-css-comments
+$ npm install strip-css-comments
 ```
 
 

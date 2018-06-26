@@ -1,7 +1,7 @@
 import test from 'ava';
 import m from '.';
 
-test(t => {
+test('main', t => {
 	t.is(m('/*//comment*/body{}'), 'body{}');
 	t.is(m('body{/*comment*/}'), 'body{}');
 	t.is(m('body{/*\ncomment\n\\*/}'), 'body{}');
