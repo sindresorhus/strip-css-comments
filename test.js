@@ -1,5 +1,5 @@
 import test from 'ava';
-import m from './';
+import m from '.';
 
 test(t => {
 	t.is(m('/*//comment*/body{}'), 'body{}');
@@ -35,7 +35,7 @@ test(t => {
 	t.is(m('body/*!foo*/{}', {preserve: false}), 'body{}');
 	t.is(m('body{/*!"\'\\"*/}', {preserve: false}), 'body{}');
 
-	t.is(m(new Buffer('body{/*comment*/}')), 'body{}');
+	t.is(m(Buffer.from('body{/*comment*/}')), 'body{}');
 
 	t.is(m('body{/*##foo##*/}', {preserve: /^##foo##/}), 'body{/*##foo##*/}');
 	t.is(m('body{/*foo*/}', {preserve: /^##foo##/}), 'body{}');
@@ -45,31 +45,31 @@ test(t => {
 
 	t.is(
 		m('body{/*##foo##*/}', {
-			preserve: comment => /^##foo##/.test(comment)
+			preserve: comment => comment.startsWith('##foo##')
 		}), 'body{/*##foo##*/}'
 	);
 
 	t.is(
 		m('body{/*foo*/}', {
-			preserve: comment => /^##foo##/.test(comment)
+			preserve: comment => comment.startsWith('##foo##')
 		}), 'body{}'
 	);
 
 	t.is(
 		m('body{/*##foo##*//*foo*/}', {
-			preserve: comment => /^##foo##/.test(comment)
+			preserve: comment => comment.startsWith('##foo##')
 		}), 'body{/*##foo##*/}'
 	);
 
 	t.is(
 		m('body{/*##foo##*//*!foo*/}', {
-			preserve: comment => /^##foo##/.test(comment)
+			preserve: comment => comment.startsWith('##foo##')
 		}), 'body{/*##foo##*/}'
 	);
 
 	t.is(
 		m('body{/*!##foo##*//*foo*/}', {
-			preserve: comment => /^##foo##/.test(comment)
+			preserve: comment => comment.startsWith('##foo##')
 		}), 'body{}'
 	);
 });

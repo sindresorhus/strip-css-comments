@@ -1,13 +1,14 @@
 'use strict';
 /* global bench */
-var fs = require('fs');
-var stripCssComments = require('./');
-var fixture = fs.readFileSync('fixture.css', 'utf8');
+const fs = require('fs');
+const stripCssComments = require('.');
 
-bench('strip CSS comments', function () {
+const fixture = fs.readFileSync('fixture.css', 'utf8');
+
+bench('strip CSS comments', () => {
 	stripCssComments(fixture);
 });
 
-bench('preserve option', function () {
+bench('preserve option', () => {
 	stripCssComments(fixture, {preserve: /^!/});
 });
