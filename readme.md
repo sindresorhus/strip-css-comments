@@ -48,9 +48,9 @@ stripCssComments(
 
 ## API
 
-### stripCssComments(input, [options])
+### stripCssComments(cssString, [options])
 
-## input
+## cssString
 
 Type: `string`
 
@@ -58,11 +58,11 @@ String with CSS.
 
 ## options
 
-Type: `Object`
+Type: `object`
 
 ### preserve
 
-Type: `boolean` `RegExp` `Function`<br>
+Type: `boolean | RegExp | Function`<br>
 Default: `true`
 
 - `true` - Preserve important comments `/*! */`.

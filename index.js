@@ -1,7 +1,7 @@
 'use strict';
 const isRegExp = require('is-regexp');
 
-module.exports = (input, options = {}) => {
+module.exports = (cssString, options = {}) => {
 	let preserveImportant = !(options.preserve === false || options.all === true);
 
 	let preserveFilter;
@@ -18,10 +18,10 @@ module.exports = (input, options = {}) => {
 	let comment = '';
 	let returnValue = '';
 
-	for (let i = 0; i < input.length; i++) {
-		currentCharacter = input[i];
+	for (let i = 0; i < cssString.length; i++) {
+		currentCharacter = cssString[i];
 
-		if (input[i - 1] !== '\\') {
+		if (cssString[i - 1] !== '\\') {
 			if (currentCharacter === '"' || currentCharacter === '\'') {
 				if (isInsideString === currentCharacter) {
 					isInsideString = false;
@@ -32,15 +32,15 @@ module.exports = (input, options = {}) => {
 		}
 
 		// Find beginning of /* type comment
-		if (!isInsideString && currentCharacter === '/' && input[i + 1] === '*') {
+		if (!isInsideString && currentCharacter === '/' && cssString[i + 1] === '*') {
 			// Ignore important comment when configured to preserve comments using important syntax: /*!
-			if (!(preserveImportant && input[i + 2] === '!')) {
+			if (!(preserveImportant && cssString[i + 2] === '!')) {
 				let j = i + 2;
 
 				// Iterate over comment
-				for (; j < input.length; j++) {
+				for (; j < cssString.length; j++) {
 					// Find end of comment
-					if (input[j] === '*' && input[j + 1] === '/') {
+					if (cssString[j] === '*' && cssString[j + 1] === '/') {
 						if (preserveFilter) {
 							// Evaluate comment text
 							returnValue = preserveFilter(comment) ? returnValue + ('/*' + comment + '*/') : returnValue;
@@ -52,7 +52,7 @@ module.exports = (input, options = {}) => {
 
 					// Store comment text to be evaluated by the filter when the end of the comment is reached
 					if (preserveFilter) {
-						comment += input[j];
+						comment += cssString[j];
 					}
 				}
 
