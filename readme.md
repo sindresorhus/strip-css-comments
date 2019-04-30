@@ -2,7 +2,7 @@
 
 > Strip comments from CSS
 
-Also available as a [gulp](https://github.com/sindresorhus/gulp-strip-css-comments)/[grunt](https://github.com/sindresorhus/grunt-strip-css-comments)/[broccoli](https://github.com/sindresorhus/broccoli-strip-css-comments) plugin.
+Also available as a [Gulp](https://github.com/sindresorhus/gulp-strip-css-comments)/[Grunt](https://github.com/sindresorhus/grunt-strip-css-comments)/[Broccoli](https://github.com/sindresorhus/broccoli-strip-css-comments) plugin.
 
 
 ## Usage

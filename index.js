@@ -31,7 +31,7 @@ module.exports = (cssString, options = {}) => {
 			}
 		}
 
-		// Find beginning of /* type comment
+		// Find beginning of `/*` type comment
 		if (!isInsideString && currentCharacter === '/' && cssString[i + 1] === '*') {
 			// Ignore important comment when configured to preserve comments using important syntax: /*!
 			if (!(preserveImportant && cssString[i + 2] === '!')) {

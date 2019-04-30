@@ -1,10 +1,10 @@
 declare namespace stripCssComments {
 	interface Options {
 		/**
-        - `true` - Preserve important comments `/*! *\/`.
-        - `false` - Strip all comments.
-        - `RegExp` - Preserve comments where the comment body matches a regular expression.
-        - `Function` - Preserve comments for which a function returns `true`. The function is called on each comment, gets the comment body as the first argument, and is expected to return a boolean of whether to preserve the comment.
+		- `true` - Preserve important comments `/*! *\/`.
+		- `false` - Strip all comments.
+		- `RegExp` - Preserve comments where the comment body matches a regular expression.
+		- `Function` - Preserve comments for which a function returns `true`. The function is called on each comment, gets the comment body as the first argument, and is expected to return a boolean of whether to preserve the comment.
 
 		@default true
 		*/
