@@ -3,6 +3,7 @@ const isRegExp = require('is-regexp');
 
 module.exports = (cssString, options = {}) => {
 	let preserveImportant = !(options.preserve === false || options.all === true);
+	const stripWhitespace = options.whitespace === false;
 
 	let preserveFilter;
 	if (typeof options.preserve === 'function') {

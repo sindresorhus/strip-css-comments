@@ -20,3 +20,8 @@ expectType<string>(
 		preserve: comment => comment.charAt(0) === '#'
 	})
 );
+expectType<string>(
+	stripCssComments('/*# preserved */ body { /* unicorns */color: hotpink; }', {
+		whitespace: false
+	})
+);

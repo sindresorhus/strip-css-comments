@@ -98,8 +98,11 @@ test('main', t => {
 	);
 });
 
-test.failing('strips trailing comment newline', t => {
-	t.is(stripCssComments('/* foo */\n\nbody{}'), '\nbody{}');
-	t.is(stripCssComments('/* foo */\r\n\r\nbody{}'), '\nbody{}');
-	t.is(stripCssComments('/*! foo */\r\n\r\nbody{}'), '/*! foo */\r\n\r\nbody{}');
+	t.is(stripCssComments('/* foo */\n\nbody{}', {whitespace: false}), '\nbody{}');
+	t.is(stripCssComments('/* foo */\r\n\r\nbody{}', {whitespace: false}), '\r\nbody{}');
+	t.is(stripCssComments('/*! foo */\r\n\r\nbody{}', {whitespace: false}), '/*! foo */\r\n\r\nbody{}');
+	t.is(stripCssComments('/*! foo */\r\n\r\nbody{}', {preserve: false, whitespace: false}), '\r\nbody{}');
+
+	t.is(stripCssComments('/*##foo##*/\nbody{}', {preserve: /^##foo##/, whitespace: false}), '/*##foo##*/\nbody{}');
+	t.is(stripCssComments('/*##foo##*/\r\nbody{}', {preserve: /^##foo##/, whitespace: false}), '/*##foo##*/\r\nbody{}');
 });
