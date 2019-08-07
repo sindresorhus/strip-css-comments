@@ -17,6 +17,7 @@ test('main', t => {
 	t.is(stripCssComments('body{\r\n /*!\n\n\n\nfoo*/\n}'), 'body{\r\n /*!\n\n\n\nfoo*/\n}');
 	t.is(stripCssComments('body/*!foo*/{}'), 'body/*!foo*/{}');
 	t.is(stripCssComments('body{/*!"\'\\"*/}'), 'body{/*!"\'\\"*/}');
+	t.is(stripCssComments('/*!//i"m comment*/body{/*another comment*/}'), '/*!//i"m comment*/body{}');
 
 	t.is(stripCssComments('/*!//comment*/body{}', {all: true}), 'body{}');
 	t.is(stripCssComments('/*!//comment*/body{}', {all: true}), 'body{}');
@@ -26,6 +27,7 @@ test('main', t => {
 	t.is(stripCssComments('body{\r\n /*!\n\n\n\nfoo*/\n}', {all: true}), 'body{\r\n \n}');
 	t.is(stripCssComments('body/*!foo*/{}', {all: true}), 'body{}');
 	t.is(stripCssComments('body{/*!"\'\\"*/}', {all: true}), 'body{}');
+	t.is(stripCssComments('/*!//i"m comment*/body{/*another comment*/}', {all: true}), 'body{}');
 
 	t.is(stripCssComments('/*!//comment*/body{}', {preserve: false}), 'body{}');
 	t.is(stripCssComments('body{/*!comment*/}', {preserve: false}), 'body{}');
@@ -34,6 +36,7 @@ test('main', t => {
 	t.is(stripCssComments('body{\r\n /*!\n\n\n\nfoo*/\n}', {preserve: false}), 'body{\r\n \n}');
 	t.is(stripCssComments('body/*!foo*/{}', {preserve: false}), 'body{}');
 	t.is(stripCssComments('body{/*!"\'\\"*/}', {preserve: false}), 'body{}');
+	t.is(stripCssComments('/*!//i"m comment*/body{/*another comment*/}', {preserve: false}), 'body{}');
 
 	t.is(stripCssComments('body{/*##foo##*/}', {preserve: /^##foo##/}), 'body{/*##foo##*/}');
 	t.is(stripCssComments('body{/*foo*/}', {preserve: /^##foo##/}), 'body{}');
