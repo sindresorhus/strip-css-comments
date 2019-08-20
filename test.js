@@ -93,7 +93,9 @@ test('main', t => {
 	t.is(
 		stripCssComments('body{/*!##foo*//*foo*/}', {
 			preserve: comment => comment.endsWith('foo')
-		}), 'body{/*!##foo*//*foo*/}');
+		}),
+		'body{/*!##foo*//*foo*/}'
+	);
 });
 
 test.failing('strips trailing comment newline', t => {
