@@ -34,33 +34,33 @@ module.exports = (cssString, options = {}) => {
 		// Find beginning of `/*` type comment
 		if (!isInsideString && currentCharacter === '/' && cssString[i + 1] === '*') {
 			// Ignore important comment when configured to preserve comments using important syntax: /*!
-			if (!(preserveImportant && cssString[i + 2] === '!')) {
-				let j = i + 2;
+			const isImportantComment = cssString[i + 2] === '!';
+			let j = i + 2;
 
-				// Iterate over comment
-				for (; j < cssString.length; j++) {
-					// Find end of comment
-					if (cssString[j] === '*' && cssString[j + 1] === '/') {
-						if (preserveFilter) {
-							// Evaluate comment text
-							returnValue = preserveFilter(comment) ? returnValue + ('/*' + comment + '*/') : returnValue;
-							comment = '';
-						}
-
-						break;
+			// Iterate over comment
+			for (; j < cssString.length; j++) {
+				// Find end of comment
+				if (cssString[j] === '*' && cssString[j + 1] === '/') {
+					if (preserveImportant && isImportantComment) {
+						returnValue += `/*${comment}*/`;
+					} else if (preserveFilter) {
+						// Evaluate comment text
+						returnValue = preserveFilter(comment) ? returnValue + `/*${comment}*/` : returnValue;
 					}
 
-					// Store comment text to be evaluated by the filter when the end of the comment is reached
-					if (preserveFilter) {
-						comment += cssString[j];
-					}
+					comment = '';
+
+					break;
 				}
 
-				// Resume iteration over CSS string from the end of the comment
-				i = j + 1;
-
-				continue;
+				// Store comment text
+				comment += cssString[j];
 			}
+
+			// Resume iteration over CSS string from the end of the comment
+			i = j + 1;
+
+			continue;
 		}
 
 		returnValue += currentCharacter;
