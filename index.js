@@ -42,10 +42,10 @@ module.exports = (cssString, options = {}) => {
 				// Find end of comment
 				if (cssString[j] === '*' && cssString[j + 1] === '/') {
 					if (preserveImportant && isImportantComment) {
-						returnValue += ('/*' + comment + '*/');
+						returnValue += `/*${comment}*/`;
 					} else if (preserveFilter) {
 						// Evaluate comment text
-						returnValue = preserveFilter(comment) ? returnValue + ('/*' + comment + '*/') : returnValue;
+						returnValue = preserveFilter(comment) ? returnValue + `/*${comment}*/` : returnValue;
 					}
 
 					comment = '';
