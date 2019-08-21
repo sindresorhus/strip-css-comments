@@ -96,7 +96,6 @@ test('main', t => {
 		}),
 		'body{/*!##foo*//*foo*/}'
 	);
-});
 
 	t.is(stripCssComments('/* foo */\n\nbody{}', {whitespace: false}), '\nbody{}');
 	t.is(stripCssComments('/* foo */\r\n\r\nbody{}', {whitespace: false}), '\r\nbody{}');
@@ -105,4 +104,16 @@ test('main', t => {
 
 	t.is(stripCssComments('/*##foo##*/\nbody{}', {preserve: /^##foo##/, whitespace: false}), '/*##foo##*/\nbody{}');
 	t.is(stripCssComments('/*##foo##*/\r\nbody{}', {preserve: /^##foo##/, whitespace: false}), '/*##foo##*/\r\nbody{}');
+	t.is(
+		stripCssComments('body{/*!##foo*/\n/*foo*/}', {
+			preserve: comment => comment.endsWith('foo'), whitespace: false
+		}),
+		'body{/*!##foo*/\n/*foo*/}'
+	);
+	t.is(
+		stripCssComments('body{/*!##foo*/\r\n/*foo*/}', {
+			preserve: comment => comment.endsWith('foo'), whitespace: false
+		}),
+		'body{/*!##foo*/\r\n/*foo*/}'
+	);
 });
