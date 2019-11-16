@@ -4,13 +4,11 @@
 
 Also available as a [Gulp](https://github.com/sindresorhus/gulp-strip-css-comments)/[Grunt](https://github.com/sindresorhus/grunt-strip-css-comments)/[Broccoli](https://github.com/sindresorhus/broccoli-strip-css-comments) plugin.
 
-
 ## Usage
 
 ```
 $ npm install strip-css-comments
 ```
-
 
 ## Usage
 
@@ -45,10 +43,9 @@ stripCssComments(
 //=> '/*# preserved */ body { color: hotpink; }'
 ```
 
-
 ## API
 
-### stripCssComments(cssString, [options])
+### stripCssComments(cssString, options?)
 
 ## cssString
 
@@ -62,7 +59,7 @@ Type: `object`
 
 ### preserve
 
-Type: `boolean | RegExp | Function`<br>
+Type: `boolean | RegExp | Function`\
 Default: `true`
 
 - `true` - Preserve important comments `/*! */`.
@@ -72,7 +69,7 @@ Default: `true`
 
 ### whitespace
 
-Type: `boolean`<br>
+Type: `boolean`\
 Default: `true`
 
 Replace comments with whitespace instead of stripping them entirely.
@@ -83,13 +80,7 @@ Replace comments with whitespace instead of stripping them entirely.
 $ npm run bench
 ```
 
-
 ## Related
 
 - [strip-css-comments-cli](https://github.com/sindresorhus/strip-css-comments-cli) - CLI for this module
 - [strip-json-comments](https://github.com/sindresorhus/strip-json-comments) - Strip comments from JSON
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)

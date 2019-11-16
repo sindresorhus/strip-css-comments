@@ -25,7 +25,9 @@ test('main', t => {
 	t.is(stripCssComments('body{/*!\'*/}/*foo*/'), 'body{/*!\'*/}');
 	t.is(stripCssComments('body{/*!"\'\\"*/}'), 'body{/*!"\'\\"*/}');
 	t.is(stripCssComments('body{/*!"\'"\'*/}'), 'body{/*!"\'"\'*/}');
+});
 
+test('`all` option', t => {
 	t.is(stripCssComments('/*!//comment*/body{}', {all: true}), 'body{}');
 	t.is(stripCssComments('/*!//comment*/body{}', {all: true}), 'body{}');
 	t.is(stripCssComments('/*!//"comment*/body{}', {all: true}), 'body{}');
@@ -39,7 +41,9 @@ test('main', t => {
 	t.is(stripCssComments('body{/*!\'*/}/*foo*/', {all: true}), 'body{}');
 	t.is(stripCssComments('body{/*!"\'\\"*/}', {all: true}), 'body{}');
 	t.is(stripCssComments('body{/*!"\'"\'*/}', {all: true}), 'body{}');
+});
 
+test('`preserve` option', t => {
 	t.is(stripCssComments('/*!//comment*/body{}', {preserve: false}), 'body{}');
 	t.is(stripCssComments('/*!//"comment*/body{}', {preserve: false}), 'body{}');
 	t.is(stripCssComments('/*!//\'comment*/body{}', {preserve: false}), 'body{}');
