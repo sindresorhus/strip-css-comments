@@ -9,6 +9,13 @@ declare namespace stripCssComments {
 		@default true
 		*/
 		readonly preserve?: boolean | RegExp | ((comment: string) => boolean);
+
+		/**
+		Replace comments with whitespace instead of stripping them entirely.
+
+		@default true
+		*/
+		readonly whitespace?: boolean;
 	}
 }
 
