@@ -1,4 +1,4 @@
-# strip-css-comments [![Build Status](https://travis-ci.org/sindresorhus/strip-css-comments.svg?branch=master)](https://travis-ci.org/sindresorhus/strip-css-comments)
+# strip-css-comments
 
 > Strip comments from CSS
 
