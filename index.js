@@ -1,17 +1,18 @@
-'use strict';
-const isRegExp = require('is-regexp');
+import isRegExp from 'is-regexp';
 
-module.exports = (cssString, options = {}) => {
-	let preserveImportant = !(options.preserve === false || options.all === true);
-	const stripWhitespace = options.whitespace === false;
+export default function stripCssComments(cssString, {preserve = true, whitespace = true, all} = {}) {
+	if (all) {
+		throw new Error('The `all` option is no longer supported. Use the `preserve` option instead.');
+	}
 
+	let preserveImportant = preserve;
 	let preserveFilter;
-	if (typeof options.preserve === 'function') {
+	if (typeof preserve === 'function') {
 		preserveImportant = false;
-		preserveFilter = options.preserve;
-	} else if (isRegExp(options.preserve)) {
+		preserveFilter = preserve;
+	} else if (isRegExp(preserve)) {
 		preserveImportant = false;
-		preserveFilter = comment => options.preserve.test(comment);
+		preserveFilter = comment => preserve.test(comment);
 	}
 
 	let isInsideString = false;
@@ -19,36 +20,34 @@ module.exports = (cssString, options = {}) => {
 	let comment = '';
 	let returnValue = '';
 
-	for (let i = 0; i < cssString.length; i++) {
-		currentCharacter = cssString[i];
+	for (let index = 0; index < cssString.length; index++) {
+		currentCharacter = cssString[index];
 
-		if (cssString[i - 1] !== '\\') {
-			if (currentCharacter === '"' || currentCharacter === '\'') {
-				if (isInsideString === currentCharacter) {
-					isInsideString = false;
-				} else if (!isInsideString) {
-					isInsideString = currentCharacter;
-				}
+		if (cssString[index - 1] !== '\\' && (currentCharacter === '"' || currentCharacter === '\'')) {
+			if (isInsideString === currentCharacter) {
+				isInsideString = false;
+			} else if (!isInsideString) {
+				isInsideString = currentCharacter;
 			}
 		}
 
 		// Find beginning of `/*` type comment
-		if (!isInsideString && currentCharacter === '/' && cssString[i + 1] === '*') {
+		if (!isInsideString && currentCharacter === '/' && cssString[index + 1] === '*') {
 			// Ignore important comment when configured to preserve comments using important syntax: /*!
-			const isImportantComment = cssString[i + 2] === '!';
-			let j = i + 2;
+			const isImportantComment = cssString[index + 2] === '!';
+			let index2 = index + 2;
 
 			// Iterate over comment
-			for (; j < cssString.length; j++) {
+			for (; index2 < cssString.length; index2++) {
 				// Find end of comment
-				if (cssString[j] === '*' && cssString[j + 1] === '/') {
+				if (cssString[index2] === '*' && cssString[index2 + 1] === '/') {
 					if ((preserveImportant && isImportantComment) || (preserveFilter && preserveFilter(comment))) {
 						returnValue += `/*${comment}*/`;
-					} else if (stripWhitespace) {
-						if (cssString[j + 2] === '\n') {
-							j++;
-						} else if (cssString[j + 2] + cssString[j + 3] === '\r\n') {
-							j += 2;
+					} else if (!whitespace) {
+						if (cssString[index2 + 2] === '\n') {
+							index2++;
+						} else if (cssString[index2 + 2] + cssString[index2 + 3] === '\r\n') {
+							index2 += 2;
 						}
 					}
 
@@ -58,11 +57,11 @@ module.exports = (cssString, options = {}) => {
 				}
 
 				// Store comment text
-				comment += cssString[j];
+				comment += cssString[index2];
 			}
 
 			// Resume iteration over CSS string from the end of the comment
-			i = j + 1;
+			index = index2 + 1;
 
 			continue;
 		}
@@ -71,4 +70,4 @@ module.exports = (cssString, options = {}) => {
 	}
 
 	return returnValue;
-};
+}

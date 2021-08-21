@@ -1,5 +1,5 @@
 import test from 'ava';
-import stripCssComments from '.';
+import stripCssComments from './index.js';
 
 test('main', t => {
 	t.is(stripCssComments('/*//comment*/body{}'), 'body{}');
@@ -27,22 +27,6 @@ test('main', t => {
 	t.is(stripCssComments('body{/*!"\'"\'*/}'), 'body{/*!"\'"\'*/}');
 });
 
-test('`all` option', t => {
-	t.is(stripCssComments('/*!//comment*/body{}', {all: true}), 'body{}');
-	t.is(stripCssComments('/*!//comment*/body{}', {all: true}), 'body{}');
-	t.is(stripCssComments('/*!//"comment*/body{}', {all: true}), 'body{}');
-	t.is(stripCssComments('/*!//\'comment*/body{}', {all: true}), 'body{}');
-	t.is(stripCssComments('body{/*!comment*/}', {all: true}), 'body{}');
-	t.is(stripCssComments('body{/*!\ncomment\n\\*/}', {all: true}), 'body{}');
-	t.is(stripCssComments('body{content: "\'/*!ad*/\' \\""}', {all: true}), 'body{content: "\'/*!ad*/\' \\""}');
-	t.is(stripCssComments('body{\r\n /*!\n\n\n\nfoo*/\n}', {all: true}), 'body{\r\n \n}');
-	t.is(stripCssComments('body/*!foo*/{}', {all: true}), 'body{}');
-	t.is(stripCssComments('body{/*!"*/}/*foo*/', {all: true}), 'body{}');
-	t.is(stripCssComments('body{/*!\'*/}/*foo*/', {all: true}), 'body{}');
-	t.is(stripCssComments('body{/*!"\'\\"*/}', {all: true}), 'body{}');
-	t.is(stripCssComments('body{/*!"\'"\'*/}', {all: true}), 'body{}');
-});
-
 test('`preserve` option', t => {
 	t.is(stripCssComments('/*!//comment*/body{}', {preserve: false}), 'body{}');
 	t.is(stripCssComments('/*!//"comment*/body{}', {preserve: false}), 'body{}');
@@ -66,39 +50,39 @@ test('`preserve` option', t => {
 
 	t.is(
 		stripCssComments('body{/*##foo##*/}', {
-			preserve: comment => comment.startsWith('##foo##')
-		}), 'body{/*##foo##*/}'
+			preserve: comment => comment.startsWith('##foo##'),
+		}), 'body{/*##foo##*/}',
 	);
 
 	t.is(
 		stripCssComments('body{/*foo*/}', {
-			preserve: comment => comment.startsWith('##foo##')
-		}), 'body{}'
+			preserve: comment => comment.startsWith('##foo##'),
+		}), 'body{}',
 	);
 
 	t.is(
 		stripCssComments('body{/*##foo##*//*foo*/}', {
-			preserve: comment => comment.startsWith('##foo##')
-		}), 'body{/*##foo##*/}'
+			preserve: comment => comment.startsWith('##foo##'),
+		}), 'body{/*##foo##*/}',
 	);
 
 	t.is(
 		stripCssComments('body{/*##foo##*//*!foo*/}', {
-			preserve: comment => comment.startsWith('##foo##')
-		}), 'body{/*##foo##*/}'
+			preserve: comment => comment.startsWith('##foo##'),
+		}), 'body{/*##foo##*/}',
 	);
 
 	t.is(
 		stripCssComments('body{/*!##foo##*//*foo*/}', {
-			preserve: comment => comment.startsWith('##foo##')
-		}), 'body{}'
+			preserve: comment => comment.startsWith('##foo##'),
+		}), 'body{}',
 	);
 
 	t.is(
 		stripCssComments('body{/*!##foo*//*foo*/}', {
-			preserve: comment => comment.endsWith('foo')
+			preserve: comment => comment.endsWith('foo'),
 		}),
-		'body{/*!##foo*//*foo*/}'
+		'body{/*!##foo*//*foo*/}',
 	);
 });
 
@@ -113,15 +97,15 @@ test('`whitespace` option', t => {
 
 	t.is(
 		stripCssComments('body{/*!##foo*/\n/*foo*/}', {
-			preserve: comment => comment.endsWith('foo'), whitespace: false
+			preserve: comment => comment.endsWith('foo'), whitespace: false,
 		}),
-		'body{/*!##foo*/\n/*foo*/}'
+		'body{/*!##foo*/\n/*foo*/}',
 	);
 
 	t.is(
 		stripCssComments('body{/*!##foo*/\r\n/*foo*/}', {
-			preserve: comment => comment.endsWith('foo'), whitespace: false
+			preserve: comment => comment.endsWith('foo'), whitespace: false,
 		}),
-		'body{/*!##foo*/\r\n/*foo*/}'
+		'body{/*!##foo*/\r\n/*foo*/}',
 	);
 });

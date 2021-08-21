@@ -13,7 +13,7 @@ $ npm install strip-css-comments
 ## Usage
 
 ```js
-const stripCssComments = require('strip-css-comments');
+import stripCssComments from 'strip-css-comments';
 
 // By default important comments `/*!` are preserved
 stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }');

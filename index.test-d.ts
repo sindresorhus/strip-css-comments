@@ -1,27 +1,27 @@
 import {expectType} from 'tsd';
-import stripCssComments = require('.');
+import stripCssComments from './index.js';
 
 expectType<string>(
-	stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }')
+	stripCssComments('/*! <copyright> */ body { /* unicorns */color: hotpink; }'),
 );
 expectType<string>(
 	stripCssComments(
 		'/*! <copyright> */ body { /* unicorns */color: hotpink; }', {
-		preserve: false
-	})
+			preserve: false,
+		}),
 );
 expectType<string>(
 	stripCssComments('/*# preserved */ body { /* unicorns */color: hotpink; }', {
-		preserve: /^#/
-	})
+		preserve: /^#/,
+	}),
 );
 expectType<string>(
 	stripCssComments('/*# preserved */ body { /* unicorns */color: hotpink; }', {
-		preserve: comment => comment.charAt(0) === '#'
-	})
+		preserve: comment => comment.startsWith('#'),
+	}),
 );
 expectType<string>(
 	stripCssComments('/*# preserved */ body { /* unicorns */color: hotpink; }', {
-		whitespace: false
-	})
+		whitespace: false,
+	}),
 );

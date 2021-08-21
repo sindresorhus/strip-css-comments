@@ -1,22 +1,20 @@
-declare namespace stripCssComments {
-	interface Options {
-		/**
-		- `true` - Preserve important comments `/*! *\/`.
-		- `false` - Strip all comments.
-		- `RegExp` - Preserve comments where the comment body matches a regular expression.
-		- `Function` - Preserve comments for which a function returns `true`. The function is called on each comment, gets the comment body as the first argument, and is expected to return a boolean of whether to preserve the comment.
+export interface Options {
+	/**
+	- `true` - Preserve important comments `/*! *\/`.
+	- `false` - Strip all comments.
+	- `RegExp` - Preserve comments where the comment body matches a regular expression.
+	- `Function` - Preserve comments for which a function returns `true`. The function is called on each comment, gets the comment body as the first argument, and is expected to return a boolean of whether to preserve the comment.
 
-		@default true
-		*/
-		readonly preserve?: boolean | RegExp | ((comment: string) => boolean);
+	@default true
+	*/
+	readonly preserve?: boolean | RegExp | ((comment: string) => boolean);
 
-		/**
-		Replace comments with whitespace instead of stripping them entirely.
+	/**
+	Replace comments with whitespace instead of stripping them entirely.
 
-		@default true
-		*/
-		readonly whitespace?: boolean;
-	}
+	@default true
+	*/
+	readonly whitespace?: boolean;
 }
 
 /**
@@ -26,7 +24,7 @@ Strip comments from CSS.
 
 @example
 ```
-import stripCssComments = require('strip-css-comments');
+import stripCssComments from 'strip-css-comments';
 
 // By default important comments `/*!` are preserved
 stripCssComments('/*! <copyright> *\/ body { /* unicorns *\/color: hotpink; }');
@@ -56,9 +54,7 @@ stripCssComments(
 //=> '/*# preserved *\/ body { color: hotpink; }'
 ```
 */
-declare function stripCssComments(
+export default function stripCssComments(
 	cssString: string,
-	options?: stripCssComments.Options
+	options?: Options
 ): string;
-
-export = stripCssComments;

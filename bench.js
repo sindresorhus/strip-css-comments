@@ -1,7 +1,6 @@
-'use strict';
 /* global bench */
-const fs = require('fs');
-const stripCssComments = require('.');
+import fs from 'node:fs';
+import stripCssComments from './index.js';
 
 const fixture = fs.readFileSync('fixture.css', 'utf8');
 
